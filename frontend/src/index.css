@@ -1,0 +1,11 @@
+@import "tailwindcss";
+@plugin "daisyui";
+
+*{
+    
+    box-sizing: border-box;
+}
+html , body{
+    height: 100%;
+    width: 100%;
+}
