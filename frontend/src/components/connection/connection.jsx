@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect } from "react";
+import { useEffect, useState} from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addConnection } from "./../../utils/connection";
 import BASE_URL from "./../../utils/constants";
@@ -12,6 +12,7 @@ function capitalizeFirst(name) {
 const Connection = () => {
   const userConnection = useSelector((state) => state.connection);
   const dispatch = useDispatch();
+  const [loading, setLoading] = useState(true);
 
   const fetchConnection = async () => {
     try {
@@ -23,22 +24,29 @@ const Connection = () => {
       console.log(res.data.data);
     } catch (error) {
       console.error(error);
+    }finally {
+      setLoading(false); 
     }
   };
 
-  if (!userConnection) return;
+  useEffect(() => {
+    fetchConnection();
+  }, []);
 
-  if (userConnection.length < 0) {
+  if (loading) {
+    return (
+        <h1 className="flex justify-center items-center h-[calc(100vh-4rem)] text-3xl font-bold text-gray-500">
+            Loading requests...
+        </h1>
+    );
+  }
+  if (userConnection.length === 0) {
     return (
       <h1 className="flex justify-center items-center h-[calc(100vh-4rem)] text-4xl font-bold">
         No connection found !!!!
       </h1>
     );
   }
-
-  useEffect(() => {
-    fetchConnection();
-  }, []);
 
   return (
     <div className="text-center  gap-2  h-[calc(100vh-4rem)]">
@@ -47,7 +55,6 @@ const Connection = () => {
         {userConnection.map((userConnection) => {
           const { firstName, lastName, profilePic, _id, about } =
             userConnection;
-          
 
           return (
             <div
