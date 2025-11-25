@@ -1,58 +1,57 @@
-import axios from "axios";
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { addConnection } from "./../../utils/connection";
+import React, { useEffect } from "react";
 import BASE_URL from "./../../utils/constants";
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+import { addRequest } from "./../../utils/requestsSlice";
 
 function capitalizeFirst(name) {
   if (!name) return "";
   return name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
 }
 
-const Connection = () => {
-  const userConnection = useSelector((state) => state.connection);
+const Requests = () => {
+  const request = useSelector((state) => state.request);
   const dispatch = useDispatch();
-
-  const fetchConnection = async () => {
+  const userRequest = async () => {
     try {
-      const res = await axios.get(BASE_URL + "/user/connections", {
+      const res = await axios.get(BASE_URL + "/user/requests/received", {
         withCredentials: true,
       });
-
-      dispatch(addConnection(res.data.data));
+      dispatch(addRequest(res.data.data));
       console.log(res.data.data);
     } catch (error) {
       console.error(error);
     }
   };
 
-  if (!userConnection) return;
+  useEffect(() => {
+    userRequest();
+  }, []);
 
-  if (userConnection.length < 0) {
+  if (!userRequest) return;
+
+  if (userRequest.length < 0) {
     return (
       <h1 className="flex justify-center items-center h-[calc(100vh-4rem)] text-4xl font-bold">
-        No connection found !!!!
+        You have no requests pending !!!!
       </h1>
     );
   }
 
-  useEffect(() => {
-    fetchConnection();
-  }, []);
-
   return (
     <div className="text-center  gap-2  h-[calc(100vh-4rem)]">
-      <div className="text-3xl font-bold pt-4 underline">Connnection</div>
+      <div className="text-3xl font-bold pt-4 underline">
+        Connnection Requests
+      </div>
       <div className="">
-        {userConnection.map((userConnection) => {
-          const { firstName, lastName, profilePic, _id, about } =
-            userConnection;
-          
+        {request.map((request) => {
+          const { firstName, lastName, profilePic, about, _id } =
+            request.fromUserId;
 
           return (
             <div
               key={_id}
-              className="flex  gap-4 mt-10 bg-base-200 rounded-4xl  p-6 w-2/3 mx-auto  ">
+              className="flex  gap-4 mt-10 bg-base-200 rounded-4xl  p-6 w-1/2 mx-auto  ">
               <div className="avatar avatar-placeholder ">
                 <div className="bg-neutral  w-24 rounded-full">
                   <img src={profilePic} alt="profile pic" />
@@ -64,6 +63,11 @@ const Connection = () => {
                 </p>
                 <p className="text-neutral-content">{about}</p>
               </div>
+              <div className="flex gap-2 p-6">
+                <button className="btn btn-outline btn-secondary">Accept</button>
+                <button className="btn btn-outline btn-primary">Reject </button>
+                
+              </div>
             </div>
           );
         })}
@@ -72,4 +76,4 @@ const Connection = () => {
   );
 };
 
-export default Connection;
+export default Requests;
