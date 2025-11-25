@@ -2,7 +2,7 @@ import React, { useEffect , useState} from "react";
 import BASE_URL from "./../../utils/constants";
 import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
-import { addRequest } from "./../../utils/requestsSlice";
+import { addRequest, removeRequest } from "./../../utils/requestsSlice";
 
 function capitalizeFirst(name) {
   if (!name) return "";
@@ -33,6 +33,7 @@ const Requests = () => {
     const req = await axios.post(BASE_URL+"/request/review/"+status + "/"+userId,{},{
       withCredentials:true
     })
+    dispatch(removeRequest(userId));
   } catch (error) {
     console.error(error);
   }
