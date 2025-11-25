@@ -8,6 +8,7 @@ import "./index.css";
 import appStore from "./utils/appStore";
 import Login from "./components/login&logout/Login";
 import Signup from "./components/signup/signup";
+import Connection from './components/connection/connection';
 
 const App = () => {
   return (
@@ -23,6 +24,8 @@ const App = () => {
               <Route path="/feed" element={<Feed />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/logout" element={<Logout />} />
+              <Route path="/connections" element={<Connection />} />
+              
               {/* <Route path="" element={< />}/> */}
             </Route>
           </Routes>

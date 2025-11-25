@@ -23,10 +23,10 @@ const Feed = () => {
     }
   };
 
-  const ignoreUser = async (userId) => {
+  const interested = async (userId) => {
     try {
       await axios.post(
-        BASE_URL + "/request/send/ignore",
+        BASE_URL +` /request/send/interested/${userId}`,
         {
           userId,
         },
@@ -34,6 +34,25 @@ const Feed = () => {
           withCredentials: true,
         }
       );
+
+      getFeed();
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const ignoreUser = async (userId) => {
+    try {
+      await axios.post(
+        BASE_URL + "/request/send/ignore/",
+        {
+          userId,
+        },
+        {
+          withCredentials: true,
+        }
+      );
+
       getFeed();
     } catch (error) {
       console.error(error);
@@ -49,7 +68,7 @@ const Feed = () => {
 
   return (
     <div className="flex justify-center items-center h-[calc(100vh-4rem)]">
-      <Card user={feed.data[0]} />
+      <Card user={feed.data[0]} onIgnore={ignoreUser} onInterested ={interested}/>
     </div>
   );
 };

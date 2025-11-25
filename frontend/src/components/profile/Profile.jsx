@@ -3,8 +3,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import BASE_URL from "../../utils/constants.js";
 import { addUser } from "../../utils/UserSlice.js";
-import Card from "./profileCard.jsx";
-
+import Card from './../feed/card';
 const Profile = () => {
   const user = useSelector((store) => store.user);
   const [firstName, setFirstName] = useState("");
