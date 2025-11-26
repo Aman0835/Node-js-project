@@ -1,7 +1,7 @@
-import React, { useEffect , useState} from "react";
-import BASE_URL from "./../../utils/constants";
-import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
+import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import BASE_URL from "./../../utils/constants";
 import { addRequest, removeRequest } from "./../../utils/requestsSlice";
 
 function capitalizeFirst(name) {
@@ -22,40 +22,43 @@ const Requests = () => {
       console.log(res.data.data);
     } catch (error) {
       console.error(error);
-    }finally {
-      setLoading(false); 
+    } finally {
+      setLoading(false);
     }
   };
 
-
-  const reviewRequest = async (status,userId) => {
-  try {
-    const req = await axios.post(BASE_URL+"/request/review/"+status + "/"+userId,{},{
-      withCredentials:true
-    })
-    dispatch(removeRequest(userId));
-  } catch (error) {
-    console.error(error);
-  }
-}
+  const reviewRequest = async (status, userId) => {
+    try {
+      const req = await axios.post(
+        BASE_URL + "/request/review/" + status + "/" + userId,
+        {},
+        {
+          withCredentials: true,
+        }
+      );
+      dispatch(removeRequest(userId));
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   useEffect(() => {
     userRequest();
   }, []);
   if (loading) {
     return (
-        <h1 className="flex justify-center items-center h-[calc(100vh-4rem)] text-3xl font-bold text-gray-500">
-            Loading requests...
-        </h1>
+      <h1 className="flex justify-center items-center h-[calc(100vh-4rem)] text-3xl font-bold text-gray-500">
+        Loading requests...
+      </h1>
     );
   }
 
-
- if (request.length === 0) { // ⬅️ The correct check for empty data
+  if (request.length === 0) {
+    // ⬅️ The correct check for empty data
     return (
-        <h1 className="flex justify-center items-center h-[calc(100vh-4rem)] text-4xl font-bold">
-            You have no requests pending!
-        </h1>
+      <h1 className="flex justify-center items-center h-[calc(100vh-4rem)] text-4xl font-bold">
+        You have no requests pending!
+      </h1>
     );
   }
 
@@ -85,9 +88,16 @@ const Requests = () => {
                 <p className="text-neutral-content">{about}</p>
               </div>
               <div className="flex gap-2 p-6">
-                <button className="btn btn-outline btn-secondary" onClick={()=>reviewRequest("accepted",request._id)}>Accept</button>
-                <button className="btn btn-outline btn-primary" onClick={()=>reviewRequest("rejected",request._id)}>Reject </button>
-                
+                <button
+                  className="btn btn-outline btn-secondary"
+                  onClick={() => reviewRequest("accepted", request._id)}>
+                  Accept
+                </button>
+                <button
+                  className="btn btn-outline btn-primary"
+                  onClick={() => reviewRequest("rejected", request._id)}>
+                  Reject{" "}
+                </button>
               </div>
             </div>
           );

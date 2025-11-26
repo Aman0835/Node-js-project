@@ -1,15 +1,15 @@
 import { Provider } from "react-redux";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Body from "./components/Body";
+import Connection from "./components/connection/connection";
 import Feed from "./components/feed/feed";
+import Login from "./components/login&logout/Login";
 import Logout from "./components/login&logout/Logout";
 import Profile from "./components/profile/Profile";
+import Request from "./components/requests/requets";
+import Signup from "./components/signup/signup";
 import "./index.css";
 import appStore from "./utils/appStore";
-import Login from "./components/login&logout/Login";
-import Signup from "./components/signup/signup";
-import Connection from "./components/connection/connection";
-import Request from "./components/requests/requets";
 
 const App = () => {
   return (

@@ -8,7 +8,6 @@ function capitalizeFirst(name) {
 
 const Navbar = () => {
   const user = useSelector((state) => state.user);
-  
 
   return (
     <div className="navbar bg-base-300 shadow-sm ">
@@ -20,7 +19,9 @@ const Navbar = () => {
       <div className="flex gap-2">
         {user && (
           <div className="flex items-center gap-3 mx-6">
-            <p className="hidden sm:block ">{capitalizeFirst(user.firstName)}</p>
+            <p className="hidden sm:block ">
+              {capitalizeFirst(user.firstName)}
+            </p>
             <div className="dropdown dropdown-end ">
               <button
                 tabIndex={0}
@@ -41,7 +42,6 @@ const Navbar = () => {
                 <li>
                   <Link to="/profile" className="justify-between">
                     Profile
-                    
                   </Link>
                 </li>
                 <li>

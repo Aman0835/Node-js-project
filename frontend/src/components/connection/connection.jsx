@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addConnection } from "./../../utils/connection";
 import BASE_URL from "./../../utils/constants";
@@ -24,8 +24,8 @@ const Connection = () => {
       console.log(res.data.data);
     } catch (error) {
       console.error(error);
-    }finally {
-      setLoading(false); 
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -35,9 +35,9 @@ const Connection = () => {
 
   if (loading) {
     return (
-        <h1 className="flex justify-center items-center h-[calc(100vh-4rem)] text-3xl font-bold text-gray-500">
-            Loading requests...
-        </h1>
+      <h1 className="flex justify-center items-center h-[calc(100vh-4rem)] text-3xl font-bold text-gray-500">
+        Loading requests...
+      </h1>
     );
   }
   if (userConnection.length === 0) {

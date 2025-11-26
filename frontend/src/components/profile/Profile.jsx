@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import BASE_URL from "../../utils/constants.js";
 import { addUser } from "../../utils/UserSlice.js";
-import Card from './../feed/card';
+import Card from "./../feed/card";
 const Profile = () => {
   const user = useSelector((store) => store.user);
   const [firstName, setFirstName] = useState("");
@@ -22,7 +22,7 @@ const Profile = () => {
       setLastName(user.lastName || "");
       setAbout(user.about || "");
       setGender(user.gender || "");
-      setProfilePic(user.profilePic || "");
+      setProfilePic("");
       setAge(user.age || "");
     }
   }, [user]);
@@ -113,7 +113,7 @@ const Profile = () => {
           </div>
         </div>
       )}
-       {user && <Card user={user} />}
+      {user && <Card user={user} />}
     </div>
   );
 };

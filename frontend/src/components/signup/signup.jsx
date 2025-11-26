@@ -1,8 +1,7 @@
-import React from "react";
 import axios from "axios";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { useNavigate, Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { addUser } from "../../utils/UserSlice";
 import BASE_URL from "../../utils/constants";
 
@@ -12,10 +11,10 @@ const Signup = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
-  const [about, setAbout] = useState("");
+
   const [gender, setGender] = useState("");
   const [profileurl, setProfileurl] = useState("");
-  const [age, setAge] = useState("");
+
   const [error, setError] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -34,9 +33,7 @@ const Signup = () => {
           password,
           firstName,
           lastName,
-          age,
           profileurl,
-          about,
           gender,
         },
         { withCredentials: true }
@@ -79,16 +76,7 @@ const Signup = () => {
                 onChange={(e) => setLastName(e.target.value)}
               />
             </fieldset>
-            <fieldset className="fieldset">
-              <legend className="fieldset-legend text-zinc-800">Age</legend>
-              <input
-                type="text"
-                value={age}
-                className="input"
-                placeholder="Enter your age"
-                onChange={(e) => setAge(e.target.value)}
-              />
-            </fieldset>
+
             <fieldset className="fieldset">
               <legend className="fieldset-legend text-zinc-800">Gender</legend>
               <input
@@ -111,18 +99,7 @@ const Signup = () => {
                 onChange={(e) => setProfileurl(e.target.value)}
               />
             </fieldset>
-            <fieldset className="fieldset">
-              <legend className="fieldset-legend text-zinc-800">
-                About
-              </legend>
-              <input
-                type="text"
-                value={about}
-                className="input"
-                placeholder="About"
-                onChange={(e) => setAbout(e.target.value)}
-              />
-            </fieldset>
+
             <fieldset className="fieldset">
               <legend className="fieldset-legend text-zinc-800">
                 Email Id

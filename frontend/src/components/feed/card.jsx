@@ -1,10 +1,32 @@
+import axios from "axios";
+import { useDispatch } from "react-redux";
+import { removeFeed } from "../../utils/feedSlice.js";
+import BASE_URL from "./../../utils/constants";
+
 function capitalizeFirst(name) {
   if (!name) return "";
   return name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
 }
 
-const Card = ({ user = {}, onIgnore, onInterested }) => {
-  const { firstName, lastName, age, about, profilePic } = user;
+const Card = ({ user = {} }) => {
+  const { _id, firstName, lastName, age, about, profilePic } = user;
+  const dispatch = useDispatch();
+
+  const requestUser = async (status, userId) => {
+    try {
+      await axios.post(
+        `${BASE_URL}/request/send/${status}/${userId}`,
+        {},
+        {
+          withCredentials: true,
+        }
+      );
+
+      dispatch(removeFeed(userId));
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <div className="flex justify-center items-center h-[calc(100vh-4rem)]">
@@ -47,14 +69,18 @@ const Card = ({ user = {}, onIgnore, onInterested }) => {
             <button
               className="w-[135px] h-[60px] border-3 rounded-xl font-bold text-lg uppercase transition-all duration-300 mx-4
                          text-black border-black bg-white hover:bg-black hover:text-white"
-              onClick={onIgnore}>
+              onClick={() => {
+                requestUser("ignored", _id);
+              }}>
               Ignore
             </button>
 
             <button
               className="w-[135px] h-[60px] border-3 rounded-xl font-bold text-lg uppercase transition-all duration-300 mx-4
                          text-white border-black bg-black hover:bg-white hover:text-black"
-              onClick={onInterested}>
+              onClick={() => {
+                requestUser("interested", _id);
+              }}>
               Interested
             </button>
           </div>
